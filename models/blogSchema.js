@@ -14,6 +14,12 @@ const BlogSchema = new mongoose.Schema({
   },
   name:{
     type:String
+  },
+  blogID:{
+    type:String
+  },
+  fileType:{
+    type:String
   }
 });
 

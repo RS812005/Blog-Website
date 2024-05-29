@@ -71,6 +71,12 @@
         background-color: #0056b3;
         border-color: #004085;
       }
+      .card-img-top {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
     </style>
   </head>
   <body>
@@ -83,9 +89,14 @@
       <div class="blog-container">
         <% blogs.forEach(blog => { %>
         <form class="card" action="/dashboard/searchBlog" method="POST">
+          <img
+            class="card-img-top"
+            src="../uploads/<%= blog.blogID + blog.fileType %>"
+            alt="<%= blog.blogID + blog.fileType %>"
+          />
           <div class="card-body">
             <h5 class="card-title"><%= blog.title %></h5>
-            <p class="card-text"><%= blog.content %></p>
+            
             <p class="card-text">
               <small class="text-muted">Author: <%= blog.name %></small>
             </p>

@@ -45,11 +45,16 @@
             font-size: 0.875rem;
             color: #6c757d;
         }
+        .card-img-top {
+            width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     <div class="blog-container">
         <div class="card">
+            <img class="card-img-top" src="../uploads/<%= blog.blogID + blog.fileType%>" alt="<%= blog.title %>">
             <div class="card-body">
                 <h5 class="card-title"><%= blog.title %></h5>
                 <p class="card-text">

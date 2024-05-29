@@ -4,17 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-container h4 {
+            color: red;
+        }
+        .login-container label {
+            margin-top: 1rem;
+        }
+        .login-container button {
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <% if (!login) { %>
-        <h4>Wrong Credentails</h4>
-    <% } %>
-    <form  action="/users/login" method="post">
-        <label id="email">Email</label>
-        <input type="email" for="email" placeholder="email" name="email" required>
-        <label id="password">Password</label>
-        <input type="password" for="password" placeholder="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-container">
+        <% if (!login) { %>
+            <h4>Wrong Credentials</h4>
+        <% } %>
+        <form action="/users/login" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
 </body>
 </html>
