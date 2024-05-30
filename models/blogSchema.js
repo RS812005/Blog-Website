@@ -8,7 +8,11 @@ const blogSchema = new mongoose.Schema({
   blogID: String,
   fileType: String,
   likes: Number,
-  likedBy: [String] // Store user IDs who have liked the post
+  likedBy: [String], 
+  commentInfo: [{
+    name: String,
+    commentContent: String
+  }]
 });
 
 module.exports = mongoose.model('Blog', blogSchema);
