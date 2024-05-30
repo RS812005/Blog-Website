@@ -1,28 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const BlogSchema = new mongoose.Schema({
-  title:{
-    type:String,
-    require:true
-  },
-  content:{
-    type:String,
-    require:true
-  },
-  email:{
-    type:String
-  },
-  name:{
-    type:String
-  },
-  blogID:{
-    type:String
-  },
-  fileType:{
-    type:String
-  }
+const blogSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+  email: String,
+  name: String,
+  blogID: String,
+  fileType: String,
+  likes: Number,
+  likedBy: [String] // Store user IDs who have liked the post
 });
 
-const Blog = mongoose.model("Blog", BlogSchema);
-
-module.exports = Blog;
+module.exports = mongoose.model('Blog', blogSchema);

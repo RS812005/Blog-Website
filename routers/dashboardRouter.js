@@ -8,15 +8,16 @@ const fs = require('fs');
 
 let searchBlog = {};
 
+
 router.get("/", async (req, res) => {
-  let userEmail = req.user.email;
-  let currentUser = await User.findOne({ email: userEmail });
+  userEmail = req.user.email;
+
   let blogs = await Blog.find({});
   res.render("dashboard", { blogs: blogs });
 });
 
 router.get("/home", (req, res) => {
-  res.send("Home");
+  res.redirect("/dashboard")
 });
 
 router.get("/createBlog", (req, res) => {
@@ -42,7 +43,9 @@ router.post("/createBlog", upload.single('file'), async (req, res) => {
       email: req.user.email,
       name: req.user.name,
       blogID: uniqueSuffix,
-      fileType:path.extname(file.originalname)
+      fileType: path.extname(file.originalname),
+      likes: 0,
+      likedBy: [] // Initialize the likedBy array
     });
 
     // Rename the uploaded file to match the blogID
@@ -59,6 +62,7 @@ router.post("/createBlog", upload.single('file'), async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 router.get("/yourBlogs", async (req, res) => {
   let blogs = await Blog.find({ email: req.user.email });
   res.render("yourBlogs", { blogs: blogs });
@@ -74,6 +78,30 @@ router.post("/searchBlog", async (req, res) => {
 
 router.get("/timepass", (req, res) => {
   res.render("searchBlog", { blog: searchBlog });
+});
+
+router.post("/likes/:id", async (req, res) => {
+  let userEmail = req.user.email;
+
+  try {
+    // Find the blog post
+     searchBlog = await Blog.findOne({ blogID: req.params.id });
+
+    // Check if the user has already liked the searchBlog post
+    if (searchBlog.likedBy.includes(userEmail)) {
+      return res.redirect("/dashboard/timepass"); // User has already liked this post
+    }
+
+    // Increment the likes count and add the user's email to the likedBy array
+    searchBlog.likes += 1;
+    searchBlog.likedBy.push(userEmail);
+    await searchBlog.save();
+    console.log(searchBlog);
+    res.redirect("/dashboard/timepass");
+  } catch (error) {
+    console.error("Error updating likes:", error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 module.exports = router;
