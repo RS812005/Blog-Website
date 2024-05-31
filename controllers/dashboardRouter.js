@@ -1,4 +1,5 @@
 const Blog = require("../models/blogSchema");
+const User=require("../models/userSchema")
 const path = require("path");
 const fs = require("fs");
 
@@ -72,7 +73,11 @@ async function dashboard_searchBlog_POST(req, res) {
   res.redirect("/dashboard/timepass");
 }
 function dashboard_timepass_GET(req, res) {
-  res.render("searchBlog", { blog: searchBlog });
+  let paragraphs = searchBlog.content.split(/\r?\n/).map(line => `<p>${line}</p>`).join('');
+
+  res.render("searchBlog", { blog: searchBlog,
+    paragraphs:paragraphs
+   });
 }
 async function dashboard_likes_POST(req, res) {
   let userEmail = req.user.email;
@@ -106,7 +111,11 @@ async function dashboard_comments_POST(req, res) {
   await searchBlog.save();
   res.redirect("/dashboard/timepass");
 }
+async function dashboard_allBlogs_GET(req,res){
+    let users= await User.find({})
 
+    res.render("userInfo",{users:users})
+}
 module.exports = {
   dashboard_GET,
   dashboard_home_GET,
@@ -117,4 +126,5 @@ module.exports = {
   dashboard_timepass_GET,
   dashboard_likes_POST,
   dashboard_comments_POST,
+  dashboard_allBlogs_GET
 };

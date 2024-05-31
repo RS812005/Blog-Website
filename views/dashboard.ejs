@@ -78,7 +78,13 @@
     <div class="navbar">
         <a href="/dashboard/home">Home</a>
         <a href="/dashboard/createBlog">Create a Blog</a>
+        <form class="d-flex" role="search" action="/dashboard/find" method="post">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
         <a href="/dashboard/yourBlogs">Your Blogs</a>
+        <a href="/users/signout">Signout</a>
+
     </div>
     <div class="container">
         <div class="blog-container">

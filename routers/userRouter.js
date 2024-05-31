@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "rishabh@$@";
 const router = express.Router();
 const User = require("../models/userSchema");
-const Blog = require("../models/blogSchema");
 router.get("/signup", (req, res) => {
   res.render("signup");
 });
@@ -34,13 +33,26 @@ router.post("/login", async (req, res) => {
     password: password,
   });
   if (result != null) {
-    const token = jwt.sign(
-      {
-        email: email,
-        name: result.name,
-      },
-      SECRET_KEY
-    );
+    if(email=="rishabh0381@gmail.com"){
+       token = jwt.sign(
+        {
+          email: email,
+          name: result.name,
+          role:"admin"
+        },
+        SECRET_KEY
+      );
+    }
+    else{
+       token = jwt.sign(
+        {
+          email: email,
+          name: result.name,
+          role:"user"
+        },
+        SECRET_KEY
+      );
+    }
   
     res.cookie("token", token);
     res.redirect("/dashboard");
@@ -51,4 +63,9 @@ router.post("/login", async (req, res) => {
     });
   }
 });
+router.get("/signout",(req,res)=>{
+  res.clearCookie("token");
+  res.redirect("/users/login");
+
+})
 module.exports = router;
